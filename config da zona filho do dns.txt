@@ -1,0 +1,17 @@
+$TTL 10
+$ORIGIN filho.c62.ifrn.local.
+@       IN SOA ns admin.c62.ifrn.local. (
+
+                                2022101707      ; serial
+                                86400           ; refresh
+                                86400           ; retry
+                                86400           ; expiry
+                                1H     )        ; mininum
+
+@               IN NS ns
+@               IN MX 0 mail
+
+ns              IN A 192.168.102.162
+mail            IN A 192.168.102.162
+www             IN A 192.168.102.162
+ftp             IN CNAME www

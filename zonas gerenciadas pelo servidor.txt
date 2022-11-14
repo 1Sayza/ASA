@@ -1,0 +1,86 @@
+
+root@asa68:~# cat /etc/named.conf
+//
+// named.conf
+//
+// Provided by Red Hat bind package to configure the ISC BIND named(8) DNS
+// server as a caching only nameserver (as a localhost DNS resolver only).
+//
+// See /usr/share/doc/bind*/sample/ for example named configuration files.
+//
+
+options {
+        listen-on port 53 { any; };
+        forwarders { 192.168.102.100; };
+        listen-on-v6 port 53 { any; };
+        empty-zones-enable yes;
+        disable-empty-zone "168.192.IN-ADDR.ARPA";
+        disable-empty-zone "8.E.F.IP6.ARPA";
+        directory       "/var/named";
+        dump-file       "/var/named/data/cache_dump.db";
+        statistics-file "/var/named/data/named_stats.txt";
+        memstatistics-file "/var/named/data/named_mem_stats.txt";
+        allow-query     { any; };
+        recursion yes;
+
+        dnssec-enable yes;
+        dnssec-validation no;
+
+        /* Path to ISC DLV key */
+        bindkeys-file "/etc/named.iscdlv.key";
+
+        managed-keys-directory "/var/named/dynamic";
+};
+
+logging {
+        channel default_debug {
+                file "data/named.run";
+                severity dynamic;
+        };
+};
+
+zone "." IN {
+        type hint;
+        file "named.ca";
+};
+
+zone "c68.ifrn.local." IN{
+        type master;
+        file "c68.ifrn.local.";
+};
+
+zone "c62.ifrn.local." IN {
+        type slave;
+        file "slaves/c62.ifrn.local.";
+        masters { 192.168.102.162; };
+};
+zone "filho.c62.ifrn.local" IN {
+        type master;
+        file"filho.c62.ifrn.local";
+
+};
+
+
+zone "oculta.ifrn.local" IN {
+        type slave;
+        file "slaves/oculta.ifrn.local";
+        masters { 192.168.102.104; };
+};
+zone "104.168.192.in-addr.arpa." IN {
+        type slave;
+        file "slaves/zonareversa";
+        masters { 192.168.104.100; };
+};
+
+zone "f.1.e.f.f.f.c.c.b.b.8.a.0.0.0.0.0.0.0.0.0.0.0.0.0.8.e.f.ip6.arpa." IN {
+        type slave;
+        file"slaves/zonareversaip6";
+        masters { FD1F:68::100; };
+
+};
+
+
+
+include "/etc/named.rfc1912.zones";
+include "/etc/named.root.key";
+root@asa68:~#
