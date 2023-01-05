@@ -1,0 +1,36 @@
+CREATE DATABASE IF NOT EXISTS ASA68;
+
+USE ASA68;
+
+/*Table structure for table ftpusers */
+
+CREATE TABLE IF NOT EXISTS ftpusers (
+nome varchar(255) NOT NULL DEFAULT 'Nome',
+login varchar(20) NOT NULL,
+senha varchar(20) NOT NULL,
+uid int(10) NOT NULL AUTO_INCREMENT,
+gid int(10) DEFAULT NULL,
+ativo char(1) NOT NULL DEFAULT 's',
+dir varchar(255) NOT NULL,
+shell varchar(255) NOT NULL,
+email varchar(255) DEFAULT NULL,
+PRIMARY KEY (login),
+KEY login (login),
+KEY uid (uid) );
+
+CREATE TABLE IF domains (domain VARCHAR(50) NOT NULL, PRIMARY KEY (domain) );
+CREATE TABLE IF forwardings (source VARCHAR(80) NOT NULL, destination TEXT NOT NULL, PRIMARY KEY (source) );
+CREATE TABLE transport ( domain VARCHAR(128) NOT NULL DEFAULT '', transport VARCHAR(128) NOT NULL DEFAULT '', UNIQUE KEY domain (domain) );
+CREATE VIEW `ASA68`.`users`  AS (SELECT email,ENCRYPT(senha) AS 'password'  FROM ftpusers);
+INSERT INTO domains (domain) VALUES ('mail68.local');
+
+
+insert into ftpusers(nome,login,senha,uid,gid,ativo,dir,shell,email) values ('Teste - at3','at3','atividade',15003,15000,'s','/home/mail1/','/bin/bash','at@mail68.local');
+
+insert into ftpusers(nome,login,senha,uid,gid,ativo,dir,shell,email) values ('Teste - at4','at4','atividade',15004,15000,'s','/home/mail2/','/bin/bash','at@f.mail68.local');
+
+insert into ftpgroups(groupname,gid,members) values ('mail',100,'at@mail68.local,at@f.mail68.local');
+
+insert into ASA68.domains (domain) VALUES ('mail68.local');
+
+
