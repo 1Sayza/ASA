@@ -1,0 +1,38 @@
+mysql> select * from ftpusers;
++---------------+-------+-----------+-------+-------+-------+--------------+-----------+-------------------+
+| nome          | login | senha     | uid   | gid   | ativo | dir          | shell     | email             |
++---------------+-------+-----------+-------+-------+-------+--------------+-----------+-------------------+
+| Teste – at1 | at1   | atividade | 15001 | 15000 | s     | /home/at1    | /bin/bash | at@ftp68.local    |
+| Teste – at2 | at2   | atividade | 15002 | 15000 | s     | /home/at2    | /bin/bash | at@f.ftp68.local  |
+| Teste - at3   | at3   | atividade | 15003 | 15001 | s     | /home/mail1/ | /bin/bash | at@mail68.local   |
+| Teste - at4   | at4   | atividade | 15004 | 15001 | s     | /home/mail2/ | /bin/bash | at@f.mail68.local |
++---------------+-------+-----------+-------+-------+-------+--------------+-----------+-------------------+
+
+
+mysql> select * from ftpgroups;
++-----------+-------+-----------------------------------+
+| groupname | gid   | members                           |
++-----------+-------+-----------------------------------+
+| atividade | 15000 | at@ftp68.local,at@f.ftp68.local   |
+| mail      | 15001 | at@mail68.local,at@f.mail68.local |
++-----------+-------+-----------------------------------+
+
+
+mysql> select * from forwardings;
++--------------------+-----------------+
+| source             | destination     |
++--------------------+-----------------+
+| alias@mail68.local | at@mail68.local |
++--------------------+-----------------+
+
+mysql> show tables;
++-----------------+
+| Tables_in_ASA68 |
++-----------------+
+| domains         |
+| forwardings     |
+| ftpgroups       |
+| ftpusers        |
+| transport       |
+| users           |
++-----------------+
